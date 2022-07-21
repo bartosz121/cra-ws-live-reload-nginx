@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  blog:
+    build:
+      context: ./blog
+      dockerfile: Dockerfile
+    environment:
+      - WDS_SOCKET_PORT=0
+    volumes:
+      - ./blog:/app
+    networks:
+      - mynetwork
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3000 # dev server port
+    ports:
+      - "3000:80"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
